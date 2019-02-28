@@ -1,0 +1,19 @@
+{
+	"name": "react-native-tempi-fft",
+	"version": "0.0.1",
+	"description": "React Native extension for recording audio with FFT transforms and view",
+	"main": "index.js",
+	"author": "Simon Mitchell <simon@3sidedcube.com>",
+	"files": [],
+	"keywords": [
+		"react-native",
+		"audio",
+		"record",
+		"fft"
+	],
+	"repository": {
+		"type": "git",
+		"url": "git@github.com:3sidedcube/react-native-tempi-fft.git"
+	},
+	"nativePackage": true
+}
