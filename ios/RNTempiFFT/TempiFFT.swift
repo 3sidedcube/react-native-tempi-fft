@@ -40,7 +40,7 @@ import Accelerate
     private(set) var sampleRate: Float
     
     /// The Nyquist frequency is ```sampleRate``` / 2
-    var nyquistFrequency: Float {
+    @objc var nyquistFrequency: Float {
         get {
             return sampleRate / 2.0
         }
@@ -50,10 +50,10 @@ import Accelerate
     private var magnitudes: [Float] = []
     
     /// After calling calculateLinearBands() or calculateLogarithmicBands(), contains a magnitude for each band.
-    private(set) var bandMagnitudes: [Float]!
+    @objc private(set) var bandMagnitudes: [Float]!
     
     /// After calling calculateLinearBands() or calculateLogarithmicBands(), contains the average frequency for each band
-    private(set) var bandFrequencies: [Float]!
+    @objc private(set) var bandFrequencies: [Float]!
     
     /// The average bandwidth throughout the spectrum (nyquist / magnitudes.count)
     var bandwidth: Float {
@@ -69,7 +69,7 @@ import Accelerate
     private(set) var bandMinFreq, bandMaxFreq: Float!
     
     /// Supplying a window type (hanning or hamming) smooths the edges of the incoming waveform and reduces output errors from the FFT function (aka "spectral leakage" - ewww).
-    var windowType = TempiFFTWindowType.none
+    @objc var windowType = TempiFFTWindowType.none
     
     private var halfSize:Int
     private var log2Size:Int
@@ -81,7 +81,7 @@ import Accelerate
     /// Instantiate the FFT.
     /// - Parameter withSize: The length of the sample buffer we'll be analyzing. Must be a power of 2. The resulting ```magnitudes``` are of length ```inSize/2```.
     /// - Parameter sampleRate: Sampling rate of the provided audio data.
-    init(withSize inSize:Int, sampleRate inSampleRate: Float) {
+    @objc init(withSize inSize:Int, sampleRate inSampleRate: Float) {
         
         let sizeFloat: Float = Float(inSize)
         
@@ -111,7 +111,7 @@ import Accelerate
     
     /// Perform a forward FFT on the provided single-channel audio data. When complete, the instance can be queried for information about the analysis or the magnitudes can be accessed directly.
     /// - Parameter inMonoBuffer: Audio data in mono format
-    func fftForward(_ inMonoBuffer:[Float]) {
+    @objc func fftForward(_ inMonoBuffer:[Float]) {
         
         var analysisBuffer = inMonoBuffer
         
@@ -173,7 +173,7 @@ import Accelerate
     }
     
     /// Applies logical banding on top of the spectrum data. The bands are spaced linearly throughout the spectrum.
-    func calculateLinearBands(minFrequency: Float, maxFrequency: Float, numberOfBands: Int) {
+    @objc func calculateLinearBands(minFrequency: Float, maxFrequency: Float, numberOfBands: Int) {
         assert(hasPerformedFFT, "*** Perform the FFT first.")
         
         let actualMaxFrequency = min(self.nyquistFrequency, maxFrequency)
@@ -205,7 +205,7 @@ import Accelerate
     }
     
     /// Applies logical banding on top of the spectrum data. The bands are grouped by octave throughout the spectrum. Note that the actual min and max frequencies in the resulting band may be lower/higher than the minFrequency/maxFrequency because the band spectrum <i>includes</i> those frequencies but isn't necessarily bounded by them.
-    func calculateLogarithmicBands(minFrequency: Float, maxFrequency: Float, bandsPerOctave: Int) {
+    @objc func calculateLogarithmicBands(minFrequency: Float, maxFrequency: Float, bandsPerOctave: Int) {
         assert(hasPerformedFFT, "*** Perform the FFT first.")
         
         // The max can't be any higher than the nyquist
